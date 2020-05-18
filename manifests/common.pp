@@ -18,7 +18,7 @@ class slurm::common {
   require ::slurm::params
 
   # Install preliminary packages
-  $required_pkgs = concat($slurm::params::pre_requisite_packages, $slurm::params::extra_packages, $slurm::params::munge_extra_packages)
+  $required_pkgs = concat($slurm::params::pre_requisite_packages, $slurm::params::extra_packages, $slurm::munge_extra_packages)
   $required_pkgs.each |String $pkg| {
     # Safeguard to avoid incompatibility with other puppet modules
     if (!defined(Package[$pkg])) {

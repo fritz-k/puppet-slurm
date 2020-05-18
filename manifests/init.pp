@@ -379,6 +379,10 @@
 # @param munge_uid                 [Integer]      Default: 992
 #          UID of the munge user
 #
+# @param munge_package             [String]       Default: 'munge'
+#          The munge package that will be installed.
+# @param munge_extra_packages      [Array]        Default: []
+#          Additional munge packages that will be installed.
 ############################              ####################################
 ############################ PAM Settings ####################################
 ############################              ####################################
@@ -625,6 +629,8 @@ class slurm(
   String  $munge_key_filename             = $slurm::params::munge_key,
   Integer $munge_uid                      = $slurm::params::munge_uid,
   Integer $munge_gid                      = $slurm::params::munge_gid,
+  String  $munge_package                  = $slurm::params::munge_package,
+  Array   $munge_extra_packages           = $slurm::params::munge_extra_packages,
   #
   # PAM settings
   #

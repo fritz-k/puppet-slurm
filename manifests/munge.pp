@@ -54,15 +54,17 @@
 # does not care about it
 #
 class slurm::munge(
-  String  $ensure         = $slurm::params::ensure,
-  Boolean $create_key     = $slurm::params::munge_create_key,
-  Array $daemon_args      = $slurm::params::munge_daemon_args,
-  Integer $uid            = $slurm::params::munge_uid,
-  Integer $gid            = $slurm::params::munge_gid,
-  String $key_filename    = $slurm::params::munge_key,
-  $key_source             = undef,
-  $key_content            = undef,
-  Boolean $service_manage = $slurm::service_manage,
+  String  $ensure               = $slurm::params::ensure,
+  Boolean $create_key           = $slurm::params::munge_create_key,
+  Array $daemon_args            = $slurm::params::munge_daemon_args,
+  Integer $uid                  = $slurm::params::munge_uid,
+  Integer $gid                  = $slurm::params::munge_gid,
+  String $key_filename          = $slurm::params::munge_key,
+  $key_source                   = undef,
+  $key_content                  = undef,
+  Boolean $service_manage       = $slurm::service_manage,
+  String  $munge_package        = $slurm::params::munge_package,
+  Array   $munge_extra_packages = $slurm::params::munge_extra_packages,
 )
 inherits slurm::params
 {
@@ -84,12 +86,12 @@ inherits slurm::params
   # Install the required packages
   package { 'munge':
     ensure => $ensure,
-    name   => $slurm::params::munge_package,
+    name   => $slurm::munge_package,
   }
-  $slurm::params::munge_extra_packages.each |String $pkg| {
+  $slurm::munge_extra_packages.each |String $pkg| {
     # Safeguard to avoid incompatibility with other puppet modules
     if (!defined(Package[$pkg])) {
-      package { $slurm::params::munge_extra_packages:
+      package { $slurm::munge_extra_packages:
         ensure  => $ensure,
         require => Package['munge'],
       }
